@@ -6,6 +6,7 @@ task trimGalore {
         String fq1
         String fq2
         String sampleName
+        String outDir
         String? adapter1
         String? adapter2
     
@@ -25,7 +26,8 @@ task trimGalore {
             --length ${length} \
             ${"-a " + adapter1} \
             ${"-a2 " + adapter2} \
-            --paired ${fq1} ${fq2}
+            --paired ${fq1} ${fq2} \
+            -o ${outDir}
     }
     output {
         File outFwdPaired = "${sampleName}_val_1.fq.gz"
