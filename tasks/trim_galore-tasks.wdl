@@ -25,9 +25,7 @@ task trimGalore {
             --length ${length} \
             ${"-a " + adapter1} \
             ${"-a2 " + adapter2} \
-            --illumina \
             --paired ${fq1} ${fq2}
-            -o ${sampleName}
     }
     output {
         File outFwdPaired = "${sampleName}_val_1.fq.gz"
