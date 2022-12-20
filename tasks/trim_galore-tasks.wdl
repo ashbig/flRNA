@@ -23,8 +23,8 @@ task trimGalore {
             --stringency ${stringency} \
             -e ${e} \
             --length ${length} \
-            ~${"-a" + adapter1} \
-            ~${"-a2" + adapter2} \
+            ${"-a " + adapter1} \
+            ${"-a2 " + adapter2} \
             --illumina \
             --paired ${fq1} ${fq2}
             -o ${sampleName}
