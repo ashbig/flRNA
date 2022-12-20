@@ -1,4 +1,6 @@
-task trim_galore {
+version 1.0
+
+task trimGalore {
     input{
         String trim
         String fq1

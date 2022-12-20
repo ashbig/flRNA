@@ -1,3 +1,5 @@
+version 1.0
+
 import "tasks/trim_galore-tasks.wdl" as trimTasks
 import "tasks/star-tasks.wdl" as starTasks
 
@@ -30,6 +32,10 @@ workflow SampleWorkflow {
             cpu = cpu,
             fq1 = trimGalore.outFwdPaired,
             fq2 = trimGalore.outRevPaired,
-            outBam = outDir + sampleName + "Aligned.bam"
+            sampleName = sampleName,
+            alignedBamPath = outDir + sampleName + "Aligned.bam"
+    }
+    output{
+        File finalBam = starAlign.alignedBam
     }
 }

@@ -25,7 +25,6 @@ task deDuplicate{
         File bam
         String outputBamPath
         String outputMetricsPath
-
     }
     command {
         set -euo pipefail
