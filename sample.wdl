@@ -21,6 +21,7 @@ workflow SampleWorkflow {
             trim = trim,
             fq1 = fastqDir + sampleName + "_R1.fastq.gz",
             fq2 = fastqDir + sampleName + "_R2.fastq.gz",
+            outDir = outDir,
             sampleName = sampleName,
             adapter1 = adapter1,
             adapter2 = adapter2
