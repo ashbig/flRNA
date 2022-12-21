@@ -28,8 +28,8 @@ task starAlign {
     command {
         set -euo pipefail
         ${star} \
-        --genomeDir ${starDB}
-        --readFilesIn ${fq1} ${fq2} \ check# 
+        --genomeDir ${starDB} \
+        --readFilesIn ${fq1} ${fq2} \ 
         --readFilesCommand ${readFilesCommand} \
         --runThreadN ${cpu} \
         --outSAMattributes ${outSAMattributes} \
