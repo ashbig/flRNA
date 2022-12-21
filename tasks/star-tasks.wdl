@@ -6,8 +6,8 @@ version 1.0
 
 task starAlign {
     input {
-        File fq1
-        File? fq2 
+        String fq1
+        String? fq2 
         String starDB
         String sampleName
         String cpu
