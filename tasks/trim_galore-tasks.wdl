@@ -31,6 +31,6 @@ task trimGalore {
     }
     output {
         File outFwdPaired = "${sampleName}_R1_val_1.fq.gz"
-        File outRevPaired = "${sampleName}_R1_val_1.fq.gz"
+        File outRevPaired = "${sampleName}_R2_val_2.fq.gz"
     }
 }
