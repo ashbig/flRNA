@@ -6,15 +6,15 @@ version 1.0
 
 task starAlign {
     input {
-        String fq1
-        String? fq2 
+        File fq1
+        File? fq2 
         String starDB
         String sampleName
         String cpu
         String star
         String alignedBamPath
 
-        String outFilterType = "bySJout"
+        String outFilterType = "BySJout"
         String readFilesCommand = "zcat"
         String outFilterIntronMotifs = "RemoveNoncanonicalUnannotated"
         String alignIntronMax = "10000"
@@ -29,18 +29,18 @@ task starAlign {
         set -euo pipefail
         ${star} \
         --genomeDir ${starDB} \
-        --readFilesIn ${fq1} ${fq2} \ 
+        --readFilesIn ${fq1} ${fq2} \
         --readFilesCommand ${readFilesCommand} \
         --runThreadN ${cpu} \
         --outSAMattributes ${outSAMattributes} \
         --outFilterIntronMotifs ${outFilterIntronMotifs} \
-        --outFilterType ${outFilterType}
+        --outFilterType ${outFilterType} \
         --alignIntronMax ${alignIntronMax} \
         --outSAMstrandField ${outSAMstrandField} \
         --outFileNamePrefix ${sampleName} \
         --outSAMunmapped ${outSAMunmapped} \
         --chimSegmentMin ${chimSegmentMin} \
-        --chmJunctionoverhangMin ${chmJunctionoverhangMin} \
+        --chimJunctionOverhangMin ${chmJunctionoverhangMin} \
         --outSAMtype ${outSAMtype}
     }
     output {
