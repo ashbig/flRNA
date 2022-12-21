@@ -30,7 +30,7 @@ task trimGalore {
             -o ${outDir}
     }
     output {
-        File outFwdPaired = "${sampleName}_R1_val_1.fq.gz"
-        File outRevPaired = "${sampleName}_R2_val_2.fq.gz"
+        File outFwdPaired = "${outDir}${sampleName}_R1_val_1.fq.gz"
+        File outRevPaired = "${outDir}${sampleName}_R2_val_2.fq.gz"
     }
 }
