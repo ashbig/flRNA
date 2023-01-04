@@ -12,7 +12,6 @@ task starAlign {
         String sampleName
         String cpu
         String star
-        String alignedBamPath
 
         String outFilterType = "BySJout"
         String readFilesCommand = "zcat"
@@ -37,13 +36,13 @@ task starAlign {
         --outFilterType ${outFilterType} \
         --alignIntronMax ${alignIntronMax} \
         --outSAMstrandField ${outSAMstrandField} \
-        --outFileNamePrefix ${sampleName} \
+        --outFileNamePrefix ${sampleName + "."} \
         --outSAMunmapped ${outSAMunmapped} \
         --chimSegmentMin ${chimSegmentMin} \
         --chimJunctionOverhangMin ${chmJunctionoverhangMin} \
         --outSAMtype ${outSAMtype}
     }
     output {
-        File alignedBam = alignedBamPath
+        File alignedBam = sampleName + ".Aligned.sortedByCoord.out.bam"
     }
 }
