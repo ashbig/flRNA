@@ -33,8 +33,7 @@ workflow SampleWorkflow {
             cpu = cpu,
             fq1 = trimGalore.outFwdPaired,
             fq2 = trimGalore.outRevPaired,
-            sampleName = sampleName + '.',
-            alignedBamPath = outDir + sampleName + ".Aligned.sortedByCoord.out.bam"
+            sampleName = sampleName
     }
     output{
         File finalBam = starAlign.alignedBam
