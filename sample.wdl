@@ -33,6 +33,7 @@ workflow SampleWorkflow {
             cpu = cpu,
             fq1 = trimGalore.outFwdPaired,
             fq2 = trimGalore.outRevPaired,
+            outDir = outDir,
             sampleName = sampleName
     }
     output{
