@@ -7,5 +7,15 @@
   "rnaSeq.trim": "/mnt/data0/apps/anaconda/anaconda2/envs/py3/bin/trim_galore",
   "rnaSeq.projectDir": "/mnt/data0/ashkan/rseq_out/run1",
   "rnaSeq.sampleList": "/mnt/data0/ashkan/rseq_runs/151215_MINO_SP49_RNA/fq2/samplelist.txt",
-  "rnaSeq.adapter1": "AGATCGGAAGAGC"
+  "rnaSeq.adapter1": "AGATCGGAAGAGC",
+
+  "rnaSeq.SampleWorkflow.chromChr": "/mnt/data0/fdb/igenome/Homo_sapiens/Ensembl/GRCh37.75/Annotation/Genes/ChromNoPatch.bed",
+  "rnaSeq.SampleWorkflow.java": "/mnt/data0/apps/anaconda/anaconda2/envs/py3/bin/java",
+  "rnaSeq.SampleWorkflow.samtools": "/mnt/data0/apps/anaconda/anaconda2/envs/py3/bin/samtools",
+  "rnaSeq.SampleWorkflow.featureCounts": "/mnt/data0/apps/anaconda/anaconda2/envs/py3/bin/featureCounts",
+  "rnaSeq.SampleWorkflow.mem": "12G",
+  "rnaSeq.SampleWorkflow.make_bw": "/mnt/data0/ashkan/docker/scripts/make_bw.sh",
+  "rnaSeq.SampleWorkflow.chromSize": "/mnt/data0/fdb/igenome/Homo_sapiens/Ensembl/GRCh37.75/Annotation/Genes/ChromInfo.txt",
+  "rnaSeq.SampleWorkflow.picard": "/mnt/data0/apps/picard/build/libs/picard.jar",
+  "rnaSeq.SampleWorkflow.chromGTF": "/mnt/data0/fdb/igenome/Homo_sapiens/Ensembl/GRCh37.75/Annotation/Genes/Homo_sapiens_GRCh37_75_noRRNA_noM.gtf"
 }

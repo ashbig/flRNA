@@ -1,44 +1,60 @@
 version 1.0
 
-task Sort {
+task sort {
     input{
         String samtools
-        String bam
-        String sortedBamName
+        File bam
+        String sortedBamPath
+        String mem
     }
     command {
         set -euo pipefail
-        ${samtools} sort -m 32000000000 ${bam} -o ${sortedBamName}
+        ${samtools} sort -m ${mem} ${bam} -o ${sortedBamPath}
     }
     output {
-        File sortedBam = "${sortedBamName}"
+        File sortedBam = sortedBamPath
     }
 }
-task Index {
+task index {
     input{
         String samtools
-        String bam
+        File bam
+        String indexedBamPath
     }
     command {
         set -euo pipefail
-        ${samtools} index ${bam}
+        ${samtools} index ${bam} -o ${indexedBamPath}
     }
     output {
-        File bamIndex = "${bam}.bai"
+        File bamIndex = indexedBamPath
     }
 }
-task Scaffold {
+task scaffold {
     input{
         String samtools
         String chromChr
-        String bam
-        String noScaffoldBamName 
+        File bam
+        String noScaffoldBamPath
     }
     command {
         set -euo pipefail
-        ${samtools} sort -view -h -L ${chromChr} ${bam} -o ${noScaffoldBamName}
+        ${samtools} sort -view -h -L ${chromChr} ${bam} -o ${noScaffoldBamPath}
     }
     output {
-        File noScaffoldBam = "${noScaffoldBamName}"
+        File noScaffoldBam = noScaffoldBamPath
+    }
+}
+task filter {
+    input{
+        String samtools
+        File bam
+        String filteredBamPath
+    }
+    command {
+        set -euo pipefail
+        ${samtools} sort -view -b -F ${bam} -o ${filteredBamPath}
+    }
+    output {
+        File filteredBam = filteredBamPath
     }
 }

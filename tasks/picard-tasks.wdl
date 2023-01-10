@@ -1,21 +1,4 @@
-task AddOrReplaceReadGroups{
-    String java8
-    String mem
-    String picard_path
-    String OutDir
-    File dedup_output
-    String dedup_fix_out_name
-    String SampleName
-    String read_index
-    command <<<
-        set -o pipefail
-        set -e
-        ${java8} -Xmx${mem}g -jar ${picard_path}/picard.jar AddOrReplaceReadGroups TMP_DIR=${OutDir} I=${dedup_output} O=${dedup_fix_out_name} RGID="halo" RGLB=${SampleName} RGPL=Illumina RGPU=${read_index} RGSM=${SampleName}
-    >>>
-    output {
-        File dedup_fix_out = "${dedup_fix_out_name}"
-    }
-}
+version 1.0
 
 task deDuplicate{
     input{

@@ -2,19 +2,36 @@ version 1.0
 
 import "tasks/trim_galore-tasks.wdl" as trimTasks
 import "tasks/star-tasks.wdl" as starTasks
+import "tasks/samtools-tasks.wdl" as samTasks
+import "tasks/picard-tasks.wdl" as picardTasks
+import "tasks/other-tasks.wdl" as otherTasks
+import "tasks/custom-tasks.wdl" as customTasks
 
 # WORKFLOW DEFINITION
 workflow SampleWorkflow {
     input{
         String star
-        String trim
         String starDB
+        String trim
+        String samtools
+        String java
+        String picard
+        String featureCounts
+        String make_bw
+
         String fastqDir
         String outDir
         String sampleName
-        String cpu
         String? adapter1
         String? adapter2
+
+        String chromChr
+        String chromGTF
+        String chromSize
+
+        String mem
+        String cpu
+
     }
     call trimTasks.trimGalore {
         input:
@@ -33,10 +50,89 @@ workflow SampleWorkflow {
             cpu = cpu,
             fq1 = trimGalore.outFwdPaired,
             fq2 = trimGalore.outRevPaired,
-            outDir = outDir,
-            sampleName = sampleName
+            sampleName = outDir + sampleName
+    }
+    call samTasks.index as indexAligned {
+        input:
+            samtools = samtools,
+            bam = starAlign.alignedBam,
+            indexedBamPath = outDir + sampleName + ".Aligned.sortedByCoord.out.bai"
+    }
+    call samTasks.scaffold {
+        input:
+            samtools = samtools,
+            chromChr = chromChr,
+            bam = indexAligned.bamIndex,
+            noScaffoldBamPath = outDir + sampleName + ".bam"
+    }
+    call samTasks.index as indexScaffold {
+        input:
+            samtools = samtools,
+            bam = scaffold.noScaffoldBam,
+            indexedBamPath = outDir + sampleName + ".bai"
+    }
+    call picardTasks.deDuplicate {
+        input:
+            java = java,
+            picard = picard,
+            mem = mem, 
+            bam = indexScaffold.bamIndex,
+            outputBamPath = outDir + sampleName + ".unsort.dm.bam",
+            outputMetricsPath = outDir + sampleName + ".dupmetric.bam"
+    }
+    call samTasks.sort as deDupSort {
+        input:
+            samtools = samtools,
+            bam = deDuplicate.outputBam,
+            sortedBamPath = outDir + sampleName + ".dm.bam",
+            mem = mem
+    }
+    call samTasks.index as indexDeDup {
+        input:
+            samtools = samtools,
+            bam = deDupSort.sortedBam,
+            indexedBamPath = outDir + sampleName + ".dm.bai"
+    }
+    call samTasks.filter {
+        input:
+            samtools = samtools,
+            bam = indexDeDup.bamIndex,
+            filteredBamPath = outDir + sampleName + ".f.unsort.bam"
+    }
+    call samTasks.sort as filterSort {
+        input:
+            samtools = samtools,
+            bam = filter.filteredBam,
+            sortedBamPath = outDir + sampleName + ".f.bam",
+            mem = mem
+    }
+    call samTasks.index as indexFiltered {
+        input:
+            samtools = samtools,
+            bam = filterSort.sortedBam,
+            indexedBamPath = outDir + sampleName + ".df.bai"
+    }
+    call otherTasks.getCounts {
+        input:
+            featureCounts = featureCounts,
+            cpu = cpu,
+            chromGTF = chromGTF,
+            bam = filterSort.sortedBam,
+            featureCountOut = outDir + sampleName + ".counts"
+    }
+    call customTasks.generateBigWig {
+        input:
+            make_bw = make_bw,
+            bam = filterSort.sortedBam,
+            chromSize = chromSize,
+            bgOutPath = outDir + sampleName + ".bg.bed",
+            bigWigOutPath = outDir + sampleName + ".bw",
     }
     output{
-        File finalBam = starAlign.alignedBam
+        File finalBam = filterSort.sortedBam
+        File finalBamIndex = indexFiltered.bamIndex
+
+        File countTable = getCounts.counts
+        File bigWig = generateBigWig.bigWig
     }
 }
