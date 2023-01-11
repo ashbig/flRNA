@@ -38,7 +38,7 @@ task scaffold {
     }
     command {
         set -euo pipefail
-        ${samtools} sort -view -h -L ${chromChr} ${bam} -o ${noScaffoldBamPath}
+        ${samtools} sort -h -L ${chromChr} ${bam} -o ${noScaffoldBamPath}
     }
     output {
         File noScaffoldBam = noScaffoldBamPath
@@ -52,7 +52,7 @@ task filter {
     }
     command {
         set -euo pipefail
-        ${samtools} sort -view -b -F ${bam} -o ${filteredBamPath}
+        ${samtools} view -b -F ${bam} -o ${filteredBamPath}
     }
     output {
         File filteredBam = filteredBamPath
