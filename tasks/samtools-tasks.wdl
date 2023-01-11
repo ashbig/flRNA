@@ -38,7 +38,7 @@ task scaffold {
     }
     command {
         set -euo pipefail
-        ${samtools} sort -h -L ${chromChr} ${bam} -o ${noScaffoldBamPath}
+        ${samtools} view -h -L ${chromChr} ${bam} -o ${noScaffoldBamPath}
     }
     output {
         File noScaffoldBam = noScaffoldBamPath
