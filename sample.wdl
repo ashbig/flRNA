@@ -52,12 +52,6 @@ workflow SampleWorkflow {
             fq2 = trimGalore.outRevPaired,
             sampleName = outDir + sampleName
     }
-    call samTasks.index as indexAligned {
-        input:
-            samtools = samtools,
-            bam = starAlign.alignedBam,
-            indexedBamPath = outDir + sampleName + ".Aligned.sortedByCoord.out.bai"
-    }
     call samTasks.scaffold {
         input:
             samtools = samtools,
@@ -65,18 +59,12 @@ workflow SampleWorkflow {
             bam = starAlign.alignedBam,
             noScaffoldBamPath = outDir + sampleName + ".bam"
     }
-    call samTasks.index as indexScaffold {
-        input:
-            samtools = samtools,
-            bam = scaffold.noScaffoldBam,
-            indexedBamPath = outDir + sampleName + ".bai"
-    }
     call picardTasks.deDuplicate {
         input:
             java = java,
             picard = picard,
             mem = mem, 
-            bam = indexScaffold.bamIndex,
+            bam = scaffold.noScaffoldBam,
             outputBamPath = outDir + sampleName + ".unsort.dm.bam",
             outputMetricsPath = outDir + sampleName + ".dupmetric.bam"
     }
@@ -87,16 +75,10 @@ workflow SampleWorkflow {
             sortedBamPath = outDir + sampleName + ".dm.bam",
             mem = mem
     }
-    call samTasks.index as indexDeDup {
-        input:
-            samtools = samtools,
-            bam = deDupSort.sortedBam,
-            indexedBamPath = outDir + sampleName + ".dm.bai"
-    }
     call samTasks.filter {
         input:
             samtools = samtools,
-            bam = indexDeDup.bamIndex,
+            bam = deDupSort.sortedBam,
             filteredBamPath = outDir + sampleName + ".f.unsort.bam"
     }
     call samTasks.sort as filterSort {
