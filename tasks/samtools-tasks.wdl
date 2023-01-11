@@ -5,7 +5,7 @@ task sort {
         String samtools
         File bam
         String sortedBamPath
-        String mem
+        Int mem = 15000000000
     }
     command {
         set -euo pipefail
