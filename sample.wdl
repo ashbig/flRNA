@@ -62,7 +62,7 @@ workflow SampleWorkflow {
         input:
             samtools = samtools,
             chromChr = chromChr,
-            bam = indexAligned.bamIndex,
+            bam = starAlign.alignedBam,
             noScaffoldBamPath = outDir + sampleName + ".bam"
     }
     call samTasks.index as indexScaffold {
