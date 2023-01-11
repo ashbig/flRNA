@@ -12,7 +12,7 @@ task deDuplicate{
     command {
         set -euo pipefail
         set -e
-        ${java} -Xmx${mem}g -jar ${picard}/picard.jar MarkDuplicates \
+        ${java} -Xmx${mem}g -jar ${picard} MarkDuplicates \
         AS=true \
         M=${outputMetricsPath} \
         O=${outputBamPath} \
