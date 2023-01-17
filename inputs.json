@@ -11,7 +11,6 @@
 
   "rnaSeq.SampleWorkflow.chromChr": "/mnt/data0/fdb/igenome/Homo_sapiens/Ensembl/GRCh37.75/Annotation/Genes/ChromNoPatch.bed",
   "rnaSeq.SampleWorkflow.java": "/mnt/data0/apps/anaconda/anaconda2/envs/py3/bin/java",
-  "rnaSeq.SampleWorkflow.samtools": "/mnt/data0/apps/anaconda/anaconda2/envs/py3/bin/samtools",
   "rnaSeq.SampleWorkflow.featureCounts": "/mnt/data0/apps/anaconda/anaconda2/envs/py3/bin/featureCounts",
   "rnaSeq.SampleWorkflow.mem": "8",
   "rnaSeq.SampleWorkflow.make_bw": "/mnt/data0/ashkan/docker/scripts/make_bw.sh",

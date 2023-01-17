@@ -13,7 +13,6 @@ workflow SampleWorkflow {
         String star
         String starDB
         String trim
-        String samtools
         String java
         String picard
         String featureCounts
@@ -53,7 +52,6 @@ workflow SampleWorkflow {
     }
     call samTasks.scaffold {
         input:
-            samtools = samtools,
             chromChr = chromChr,
             bam = starAlign.alignedBam,
             noScaffoldBamPath = outDir + sampleName + ".bam"
@@ -69,27 +67,23 @@ workflow SampleWorkflow {
     }
     call samTasks.sort as deDupSort {
         input:
-            samtools = samtools,
             mem = mem + "G",
             bam = deDuplicate.outputBam,
             sortedBamPath = outDir + sampleName + ".dm.bam",
     }
     call samTasks.filter {
         input:
-            samtools = samtools,
             bam = deDupSort.sortedBam,
             filteredBamPath = outDir + sampleName + ".f.unsort.bam"
     }
     call samTasks.sort as filterSort {
         input:
-            samtools = samtools,
             mem = mem + "G",
             bam = filter.filteredBam,
             sortedBamPath = outDir + sampleName + ".f.bam",
     }
     call samTasks.index as indexFiltered {
         input:
-            samtools = samtools,
             bam = filterSort.sortedBam,
             indexedBamPath = outDir + sampleName + ".df.bai"
     }

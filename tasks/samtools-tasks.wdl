@@ -2,7 +2,6 @@ version 1.0
 
 task sort {
     input{
-        String samtools
         File bam
         String sortedBamPath
         String mem
@@ -11,7 +10,7 @@ task sort {
     }
     command {
         set -euo pipefail
-        ${samtools} sort -m ${mem} ${bam} -o ${sortedBamPath}
+        samtools sort -m ${mem} ${bam} -o ${sortedBamPath}
     }
     output {
         File sortedBam = sortedBamPath
@@ -24,7 +23,6 @@ task sort {
 
 task index {
     input{
-        String samtools
         File bam
         String indexedBamPath
 
@@ -33,7 +31,7 @@ task index {
     }
     command {
         set -euo pipefail
-        ${samtools} index ${bam} -o ${indexedBamPath}
+        samtools index ${bam} -o ${indexedBamPath}
     }
     output {
         File bamIndex = indexedBamPath
@@ -45,7 +43,6 @@ task index {
 }
 task scaffold {
     input{
-        String samtools
         String chromChr
         File bam
         String noScaffoldBamPath
@@ -55,7 +52,7 @@ task scaffold {
     }
     command {
         set -euo pipefail
-        ${samtools} view -h -L ${chromChr} ${bam} -o ${noScaffoldBamPath}
+        samtools view -h -L ${chromChr} ${bam} -o ${noScaffoldBamPath}
     }
     output {
         File noScaffoldBam = noScaffoldBamPath
@@ -67,7 +64,6 @@ task scaffold {
 }
 task filter {
     input{
-        String samtools
         File bam
         String filteredBamPath
 
@@ -76,7 +72,7 @@ task filter {
     }
     command {
         set -euo pipefail
-        ${samtools} view -b -F 1540 ${bam} -o ${filteredBamPath}
+        samtools view -b -F 1540 ${bam} -o ${filteredBamPath}
     }
     output {
         File filteredBam = filteredBamPath
