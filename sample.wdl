@@ -31,7 +31,6 @@ workflow SampleWorkflow {
 
         String mem
         String cpu
-
     }
     call trimTasks.trimGalore {
         input:
@@ -71,6 +70,7 @@ workflow SampleWorkflow {
     call samTasks.sort as deDupSort {
         input:
             samtools = samtools,
+            mem = mem + "G",
             bam = deDuplicate.outputBam,
             sortedBamPath = outDir + sampleName + ".dm.bam",
     }
@@ -83,6 +83,7 @@ workflow SampleWorkflow {
     call samTasks.sort as filterSort {
         input:
             samtools = samtools,
+            mem = mem + "G",
             bam = filter.filteredBam,
             sortedBamPath = outDir + sampleName + ".f.bam",
     }
