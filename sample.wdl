@@ -73,7 +73,6 @@ workflow SampleWorkflow {
             samtools = samtools,
             bam = deDuplicate.outputBam,
             sortedBamPath = outDir + sampleName + ".dm.bam",
-            mem = mem
     }
     call samTasks.filter {
         input:
@@ -86,7 +85,6 @@ workflow SampleWorkflow {
             samtools = samtools,
             bam = filter.filteredBam,
             sortedBamPath = outDir + sampleName + ".f.bam",
-            mem = mem
     }
     call samTasks.index as indexFiltered {
         input:
