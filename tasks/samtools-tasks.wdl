@@ -5,11 +5,10 @@ task sort {
         String samtools
         File bam
         String sortedBamPath
-        Int mem = 15000000000
     }
     command {
         set -euo pipefail
-        ${samtools} sort -m ${mem} ${bam} -o ${sortedBamPath}
+        ${samtools} sort -m 15000000000 ${bam} -o ${sortedBamPath}
     }
     output {
         File sortedBam = sortedBamPath
@@ -49,10 +48,11 @@ task filter {
         String samtools
         File bam
         String filteredBamPath
+        Int dupFilter = 1540
     }
     command {
         set -euo pipefail
-        ${samtools} view -b -F ${bam} -o ${filteredBamPath}
+        ${samtools} view -b -F dupFilter ${bam} -o ${filteredBamPath}
     }
     output {
         File filteredBam = filteredBamPath
