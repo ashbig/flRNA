@@ -6,7 +6,7 @@ task sort {
         String sortedBamPath
         String mem
 
-        String dockerImage = "docker.io/ashbig/faryabi_lab:samtools.1.16.1"
+        String dockerImage = "docker.io/staphb/samtools:latest"
     }
     command {
         set -euo pipefail
@@ -27,7 +27,7 @@ task index {
         String indexedBamPath
 
         String mem = "2G"
-        String dockerImage = "docker.io/ashbig/faryabi_lab:samtools.1.16.1"
+        String dockerImage = "docker.io/staphb/samtools:latest"
     }
     command {
         set -euo pipefail
@@ -48,7 +48,7 @@ task scaffold {
         String noScaffoldBamPath
 
         String mem = "2G"
-        String dockerImage = "docker.io/ashbig/faryabi_lab:samtools.1.16.1"
+        String dockerImage = "docker.io/staphb/samtools:latest"
     }
     command {
         set -euo pipefail
@@ -68,7 +68,7 @@ task filter {
         String filteredBamPath
 
         String mem = "2G"
-        String dockerImage = "docker.io/ashbig/faryabi_lab:samtools.1.16.1"
+        String dockerImage = "docker.io/staphb/samtools:latest"
     }
     command {
         set -euo pipefail
