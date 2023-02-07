@@ -2,7 +2,6 @@ version 1.0
 
 task getCounts {
     input {
-        String featureCounts
         String cpu
         String chromGTF
         String featureCountOut
@@ -10,12 +9,15 @@ task getCounts {
     }
     command {
         set -euo pipefail
-        ${featureCounts} -p -t exon -g gene_id -s 1 -O \
+        featureCounts -p -t exon -g gene_id -s 1 -O \
         -T ${cpu} \
         -a ${chromGTF} \
         -o ${featureCountOut} ${bam}
     }
     output {
         File counts = featureCountOut
+    }
+    runtime {
+        docker: "dsaha0295/featurecounts"
     }
 }

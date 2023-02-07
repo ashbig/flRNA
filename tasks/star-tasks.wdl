@@ -11,7 +11,6 @@ task starAlign {
         String starDB
         String sampleName
         String cpu
-        String star
 
         String outFilterType = "BySJout"
         String readFilesCommand = "zcat"
@@ -26,7 +25,7 @@ task starAlign {
     }
     command {
         set -euo pipefail
-        ${star} \
+        STAR \
         --genomeDir ${starDB} \
         --readFilesIn ${fq1} ${fq2} \
         --readFilesCommand ${readFilesCommand} \
@@ -44,5 +43,8 @@ task starAlign {
     }
     output {
         File alignedBam = "${sampleName}.Aligned.sortedByCoord.out.bam"
+    }
+    runtime {
+        docker: "docker.io/alexdobin/star:2.7.10a_alpha_220506"
     }
 }

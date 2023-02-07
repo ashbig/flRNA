@@ -27,7 +27,7 @@ task index {
         String indexedBamPath
 
         String mem = "2G"
-        String dockerImage = "docker.io/staphb/samtools:latest"
+        String dockerImage = "staphb/samtools"
     }
     command {
         set -euo pipefail
@@ -46,9 +46,6 @@ task scaffold {
         String chromChr
         File bam
         String noScaffoldBamPath
-
-        String mem = "2G"
-        String dockerImage = "docker.io/staphb/samtools:latest"
     }
     command {
         set -euo pipefail
@@ -58,8 +55,7 @@ task scaffold {
         File noScaffoldBam = noScaffoldBamPath
     }
     runtime {
-        memory: mem
-        docker: dockerImage
+        docker: "staphb/samtools"
     }
 }
 task filter {
@@ -67,8 +63,6 @@ task filter {
         File bam
         String filteredBamPath
 
-        String mem = "2G"
-        String dockerImage = "docker.io/staphb/samtools:latest"
     }
     command {
         set -euo pipefail
@@ -78,7 +72,6 @@ task filter {
         File filteredBam = filteredBamPath
     }
     runtime {
-        memory: mem
-        docker: dockerImage
+        docker: "staphb/samtools"
     }
 }

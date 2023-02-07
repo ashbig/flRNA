@@ -2,7 +2,6 @@ version 1.0
 
 task trimGalore {
     input{
-        String trim
         String fq1
         String fq2
         String sampleName
@@ -16,7 +15,7 @@ task trimGalore {
         String length = "20"
     }
     command {
-            ${trim} \
+            trim_galore \
             --fastqc \
             -q ${qual} \
             --phred33 \
@@ -32,5 +31,8 @@ task trimGalore {
     output {
         File outFwdPaired = "${outDir}${sampleName}_R1_val_1.fq.gz"
         File outRevPaired = "${outDir}${sampleName}_R2_val_2.fq.gz"
+    }
+    runtime {
+        docker: "goalconsortium/trim_galore"   
     }
 }

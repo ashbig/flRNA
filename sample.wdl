@@ -10,12 +10,7 @@ import "tasks/custom-tasks.wdl" as customTasks
 # WORKFLOW DEFINITION
 workflow SampleWorkflow {
     input{
-        String star
         String starDB
-        String trim
-        String java
-        String picard
-        String featureCounts
         String make_bw
 
         String fastqDir
@@ -28,12 +23,11 @@ workflow SampleWorkflow {
         String chromGTF
         String chromSize
 
-        String mem
         String cpu
+        String mem
     }
     call trimTasks.trimGalore {
         input:
-            trim = trim,
             fq1 = fastqDir + sampleName + "_R1.fastq.gz",
             fq2 = fastqDir + sampleName + "_R2.fastq.gz",
             outDir = outDir,
@@ -43,7 +37,6 @@ workflow SampleWorkflow {
     }
     call starTasks.starAlign {
         input:
-            star = star,
             starDB = starDB,
             cpu = cpu,
             fq1 = trimGalore.outFwdPaired,
@@ -58,9 +51,6 @@ workflow SampleWorkflow {
     }
     call picardTasks.deDuplicate {
         input:
-            java = java,
-            picard = picard,
-            mem = mem, 
             bam = scaffold.noScaffoldBam,
             outputBamPath = outDir + sampleName + ".unsort.dm.bam",
             outputMetricsPath = outDir + sampleName + ".dupmetric.bam"
@@ -89,7 +79,6 @@ workflow SampleWorkflow {
     }
     call otherTasks.getCounts {
         input:
-            featureCounts = featureCounts,
             cpu = cpu,
             chromGTF = chromGTF,
             bam = filterSort.sortedBam,
