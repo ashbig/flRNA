@@ -23,6 +23,6 @@ task deDuplicate{
         File outputMetics = outputMetricsPath
     }
     runtime {
-        docker: "docker.io/mgibio/picard-cwl"
+        docker: "mgibio/picard-cwl:2.18.1"
     }
 }

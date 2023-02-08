@@ -11,5 +11,5 @@
   "rnaSeq.SampleWorkflow.chromChr": "/mnt/data0/fdb/igenome/Homo_sapiens/Ensembl/GRCh37.75/Annotation/Genes/ChromNoPatch.bed",
   "rnaSeq.SampleWorkflow.make_bw": "/mnt/data0/ashkan/docker/scripts/make_bw.sh",
   "rnaSeq.SampleWorkflow.chromSize": "/mnt/data0/fdb/igenome/Homo_sapiens/Ensembl/GRCh37.75/Annotation/Genes/ChromInfo.txt",
-  "rnaSeq.SampleWorkflow.chromGTF": "mnt/data0/fdb/igenome/Homo_sapiens/Ensembl/GRCh37.75/Annotation/Genes/Homo_sapiens_GRCh37_75_noRRNA_noM.gtf"
+  "rnaSeq.SampleWorkflow.chromGTF": "/mnt/data0/fdb/igenome/Homo_sapiens/Ensembl/GRCh37.75/Annotation/Genes/Homo_sapiens_GRCh37_75_noRRNA_noM.gtf"
 }
