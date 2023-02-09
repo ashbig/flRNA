@@ -1,7 +1,6 @@
 version 1.0
 
 import "tasks/samtools-tasks.wdl" as samTasks
-import "tasks/picard-tasks.wdl" as picardTasks
 import "tasks/other-tasks.wdl" as otherTasks
 import "tasks/custom-tasks.wdl" as customTasks
 
@@ -9,15 +8,11 @@ import "tasks/custom-tasks.wdl" as customTasks
 workflow bigWigFlow {
     input{
         File bam
-
-        String chromChr
         String chromGTF
-        String chromSize
-
         String outDir
         String sampleName
     }
-    call otherTasks.readCount {
+    call samTasks.readCount {
         input:
             bam = bam
     }
