@@ -1,0 +1,6 @@
+{
+  "bigWigFlow.bam": "/mnt/data0/ashkan/rseq_out/run1/s01_151218_mino_igg_dmso_L001-4/s01_151218_mino_igg_dmso_L001-4.f.bam",
+  "bigWigFlow.outDir": "/mnt/data0/ashkan/rseq_out/run1/s01_151218_mino_igg_dmso_L001-4",
+  "SampleWorkflow.chromSize": "/mnt/data0/fdb/igenome/Homo_sapiens/Ensembl/GRCh37.75/Annotation/Genes/ChromInfo.txt",
+  "bigWigFlow.sampleName": "s01_151218_mino_igg_dmso_L001-4"
+}

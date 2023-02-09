@@ -4,9 +4,6 @@ task sort {
     input{
         File bam
         String sortedBamPath
-        String mem
-
-        String dockerImage = "docker.io/staphb/samtools:latest"
     }
     command {
         set -euo pipefail
@@ -16,18 +13,13 @@ task sort {
         File sortedBam = sortedBamPath
     }
     runtime {
-        memory: mem
-        docker: dockerImage
+        docker: "staphb/samtools"
     }
 }
-
 task index {
     input{
         File bam
         String indexedBamPath
-
-        String mem = "2G"
-        String dockerImage = "staphb/samtools"
     }
     command {
         set -euo pipefail
@@ -37,8 +29,7 @@ task index {
         File bamIndex = indexedBamPath
     }
     runtime {
-        memory: mem
-        docker: dockerImage
+        docker: "staphb/samtools"
     }
 }
 task scaffold {
@@ -62,7 +53,6 @@ task filter {
     input{
         File bam
         String filteredBamPath
-
     }
     command {
         set -euo pipefail
@@ -70,6 +60,21 @@ task filter {
     }
     output {
         File filteredBam = filteredBamPath
+    }
+    runtime {
+        docker: "staphb/samtools"
+    }
+}
+task readCount {
+    input {
+        File bam
+    }
+    command {
+        set -euo pipefail
+        samtools view -c ${bam}
+    }
+    output {
+        Int rc = read_int(stdout())    
     }
     runtime {
         docker: "staphb/samtools"
