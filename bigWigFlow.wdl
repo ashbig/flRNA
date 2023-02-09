@@ -8,7 +8,7 @@ import "tasks/custom-tasks.wdl" as customTasks
 workflow bigWigFlow {
     input{
         File bam
-        String chromGTF
+        String chromSize
         String outDir
         String sampleName
     }
@@ -23,12 +23,7 @@ workflow bigWigFlow {
     call customTasks.bedGraph {
         input:
             f = factor.f,
-            chromSize = chromSize,
-            bedGraphOut = outDir + sampleName + ".bg.bed"
-    }
-    call customTasks.bedGraph {
-        input:
-            f = factor.f,
+            bam = bam,
             chromSize = chromSize,
             bedGraphOut = outDir + sampleName + ".bg.bed"
     }
