@@ -21,3 +21,19 @@ task getCounts {
         docker: "dsaha0295/featurecounts"
     }
 }
+task generateBigWig {
+    input {
+        File bg
+        String chromSize
+        String bigWigOut
+    }
+    command {
+        bedGraphToBigWig ${bg} ${chromSize} ${bigWigOut}
+    }
+    output {
+        File bigWig = bigWigOut
+    }
+    runtime{
+        docker: "zavolab/bedgraphtobigwig"
+    }
+}
