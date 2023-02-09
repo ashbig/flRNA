@@ -34,7 +34,7 @@ workflow bigWigFlow {
     }
     call otherTasks.generateBigWig {
         input:
-            bedGraph = bedGraph.bg,
+            bg = bedGraph.bg,
             chromSize = chromSize,
             bigWigOut = outDir + sampleName + ".bw"
     }
