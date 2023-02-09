@@ -4,6 +4,8 @@ task sort {
     input{
         File bam
         String sortedBamPath
+
+        String mem
     }
     command {
         set -euo pipefail
