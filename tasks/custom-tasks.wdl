@@ -18,24 +18,29 @@ task generateBigWig {
 }
 task factor {
     input {
-        Int readCounts
+        Int rc
     }
     command {
-        echo scale=10; 1000000 / ${T}" | bc -l
+        echo scale=10; 1000000 / ${rc}" | bc -l
     }
     output {
-        Float factor = read_float(stdout())
+        Float f = read_float(stdout())
     }
 }
 task bedGraph {
     input {
-        Float factor
+        Float f
         File bam
         String chromSize
         String bedGraphOut
     }
     command {
-        bamToBed -i ${bam} -bed12 | bed12ToBed6 -i stdin | genomeCoverageBed -bg -i - -g ${chromSize} -scale ${factor} | sort -k1,1 -k2,2n > ${bedGraphOut}
+        bamToBed -i ${bam} -bed12 | bed12ToBed6 -i stdin | genomeCoverageBed -bg -i - -g ${chromSize} -scale ${f} | sort -k1,1 -k2,2n > ${bedGraphOut}
     }
-    
+    output {
+        File bg = bedGraphOut
+    }
+    runtime {
+        docker: "staphb/bedtools" 
+    }
 }
