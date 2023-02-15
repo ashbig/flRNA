@@ -3,6 +3,7 @@ version 1.0
 import "tasks/samtools-tasks.wdl" as samTasks
 import "tasks/other-tasks.wdl" as otherTasks
 import "tasks/custom-tasks.wdl" as customTasks
+import "tasks/bedtools-tasks" as bedTasks
 
 # WORKFLOW DEFINITION
 workflow bigWigFlow {
@@ -20,16 +21,39 @@ workflow bigWigFlow {
         input:
             rc = readCount.rc,
     }
-    call customTasks.bedGraph {
+    call bedTasks.bam2Bed {
+        input:
+            bam = bam,
+            bam2BedOut = outDir + sampleName + ".b2b.bed"
+
+    }
+    call bedTasks.bed12To6 {
+        input:
+            bed = bam2Bed.bamBed,
+            bed6Out = outDir + sampleName + ".b6.bed"
+
+    }
+    call bedTasks.bed12To6 {
+        input:
+            bed = bam2Bed.bamBed,
+            bed6Out = outDir + sampleName + ".b6.bed"
+
+    }
+    call bedTasks.coverageBed {
         input:
             f = factor.f,
-            bam = bam,
+            bed = bed12To6.bed6,
             chromSize = chromSize,
-            bedGraphOut = outDir + sampleName + ".bg.bed"
+            bedGraphOut = outDir + sampleName + ".unsorted.bed"
+    }
+    call customTasks.nixSort {
+        input:
+            in = coverageBed.covBed,
+            nixSortOut = outDir + sampleName + ".bg.bed"
     }
     call otherTasks.generateBigWig {
         input:
-            bg = bedGraph.bg,
+            bg = nixSort.nixSorted,
             chromSize = chromSize,
             bigWigOut = outDir + sampleName + ".bw"
     }
