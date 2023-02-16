@@ -5,7 +5,7 @@ task factor {
         Int rc
     }
     command {
-        echo scale=10; 1000000 / ${rc} | bc -l
+        echo "scale=10; 1000000 / ${rc}" | bc -l
     }
     output {
         Float f = read_float(stdout())
@@ -13,11 +13,11 @@ task factor {
 }
 task nixSort {
     input {
-        File in
+        File bed
         String nixSortOut
     }
     command {
-        sort -k1,1 -k2,2n ${in} > nixSortOut
+        sort -k1,1 -k2,2n ${bed} > ${nixSortOut}
     }
     output {
         File nixSorted = nixSortOut

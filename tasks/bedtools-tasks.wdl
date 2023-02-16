@@ -1,3 +1,5 @@
+version 1.0
+
 task bedGraph {
     input {
         Float f
@@ -21,7 +23,7 @@ task bam2Bed {
         String bam2BedOut
     }
     command{
-        bamToBed -i ${bam} > bam2BedOut
+        bedtools bamtobed -i ${bam} > ${bam2BedOut}
     }
     output {
         File bamBed = bam2BedOut
@@ -36,7 +38,7 @@ task bed12To6 {
         String bed6Out
     }
     command {
-        bed12ToBed6 -i ${bed} > bed6Out
+        bedtools bed12tobed6 -i ${bed} > ${bed6Out}
     }
     output {
         File bed6 = bed6Out
@@ -53,7 +55,7 @@ task coverageBed {
         String covBedOut
     }
     command {
-        genomeCoverageBed -bg -i ${bed} -g ${chromSize} -scale ${f} > ${covBedOut}
+        bedtools genomecov -bg -i ${bed} -g ${chromSize} -scale ${f} > ${covBedOut}
     }
     output {
         File covBed = covBedOut

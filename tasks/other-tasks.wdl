@@ -34,6 +34,6 @@ task generateBigWig {
         File bigWig = bigWigOut
     }
     runtime{
-        docker: "zavolab/bedgraphtobigwig"
+        docker: "zavolab/bedgraphtobigwig:4-slim"
     }
 }
