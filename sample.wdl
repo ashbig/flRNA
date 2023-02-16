@@ -5,13 +5,12 @@ import "tasks/star-tasks.wdl" as starTasks
 import "tasks/samtools-tasks.wdl" as samTasks
 import "tasks/picard-tasks.wdl" as picardTasks
 import "tasks/other-tasks.wdl" as otherTasks
-import "tasks/custom-tasks.wdl" as customTasks
+import "bigWigFlow.wdl" as bwfSub
 
 # WORKFLOW DEFINITION
 workflow SampleWorkflow {
     input{
         String starDB
-        String make_bw
 
         String fastqDir
         String outDir
@@ -84,19 +83,18 @@ workflow SampleWorkflow {
             bam = filterSort.sortedBam,
             featureCountOut = outDir + sampleName + ".counts"
     }
-    call customTasks.generateBigWig {
-        input:
-            make_bw = make_bw,
+    call bwfSub.bigWigFlow { 
+        input: 
             bam = filterSort.sortedBam,
             chromSize = chromSize,
-            bgOutPath = outDir + sampleName + ".bg.bed",
-            bigWigOutPath = outDir + sampleName + ".bw",
+            outDir = outDir,
+            sampleName = sampleName
     }
     output{
         File finalBam = filterSort.sortedBam
         File finalBamIndex = indexFiltered.bamIndex
 
         File countTable = getCounts.counts
-        File bigWig = generateBigWig.bigWig
+        File bigWig = bigWigFlow.bigWig
     }
 }
